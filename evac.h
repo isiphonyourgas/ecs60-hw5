@@ -8,6 +8,7 @@ class Plot {
 public:
   Plot();
   void buildEdge(int **grid, int i, int j, Plot ***edges);
+  void buildSideEdge(Plot ***edges, int size, int **grid);
  
   Plot *N, *NE, *E, *SE, *S, *SW, *W, *NW;
   int n, ne, e, se, s, sw, w, nw;

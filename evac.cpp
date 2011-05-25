@@ -2,6 +2,16 @@
 #include "evac.h"
 #include <iostream>
 #include <bitset>
+#include <cmath>
+
+inline int heightdif(int value1, int value2)
+{
+  int value;
+  value = value1 - value2;
+  if(value < 0)
+    value = value * -1;
+  return value;
+}
 
 Plot::Plot()
 {
@@ -10,23 +20,40 @@ Plot::Plot()
 
 void Plot::buildEdge(int **grid, int i, int j, Plot ***edges)
 {
-  N = edges[i -1][j];
-  NE = edges[i - 1][j + 1];
-  E = edges[i][j + 1];
-  SE = edges[i + 1][j + 1];
-  S = edges[i + 1][j];
-  SW = edges[i + 1][j - 1];
-  W = edges[i][j - 1];
-  NW = edges[i - 1][j - 1];
-//Sets the edge pointers
+  n = 500 + heightdif(grid[i - 1][j], grid[i][j]);
+  ne = (500 + heightdif(grid[i - 1][j + 1], grid[i][j])) * 5;
+  e = 500 + heightdif(grid[i][j + 1], grid[i][j]);
+  se = (500 + heightdif(grid[i + 1][j + 1], grid[i][j])) * 5;
+  s = 500 + heightdif(grid[i + 1][j], grid[i][j]);
+  sw = (500 + heightdif(grid[i + 1][j - 1], grid[i][j])) * 5;
+  w = 500 + heightdif(grid[i][j - 1], grid[i][j]);
+  nw = (500 + heightdif(grid[i - 1][j - 1], grid[i][j])) * 5;
+
+  if((i % 5) != 0)
+  {
+    e = e * 5;
+    w = w * 5;
+  }//If x is not a road
+
+  if((j % 5) != 0)
+  {
+    n = n * 5;
+    s = s * 5;
+  }//If y is not a road
+//Sets the weights
 
 }//build edge
+
+void Plot::buildSideEdge(Plot ***edges, int size, int **grid)
+{
+  
+}//BuildSideEdge
 
 
 Evac::Evac(int **grid, char **solution, int size) 
 {
-  int i, j, landmass;
-  landmass = size - 1;
+  int i, j, inland;
+  inland = size - 2;
 
 //  initialize edges
   edges = new Plot**[size];
@@ -39,14 +66,14 @@ Evac::Evac(int **grid, char **solution, int size)
     }
   }
 
-
 //Sets the edges.  Ommits the perimeter to save time
-  for(i = 1; i < landmass; i++)
+  for(i = 2; i < inland; i++)
   {
-    for(j = 1; j < landmass; j++)//Can be optimized to exclude -99 for water
+    for(j = 2; j < inland; j++)//Can be optimized to exclude -99 for water
     {
       edges[i][j]->buildEdge(grid, i, j, edges);
     }//for
   }//for
+  //buildSideEdge(edges, size, grid);
 }//Constructor
 
