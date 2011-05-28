@@ -54,16 +54,25 @@ Evac::Evac(int **grid, char **solution, int size)
 {
   int i, j, inland;
   inland = size - 2;
-  unsigned int N[1000][1000];
-  unsigned int NE[1000][1000];
-  unsigned int E[1000][1000];
-  unsigned int SE[1000][1000];
-  unsigned int S[1000][1000];
-  unsigned int SW[1000][1000];
-  unsigned int W[1000][1000];
-  unsigned int NW[1000][1000];
+  unsigned int *N[1000];
+  unsigned int *NE[1000];
+  unsigned int *E[1000];
+  unsigned int *SE[1000];
+  unsigned int *S[1000];
+  unsigned int *SW[1000];
+  unsigned int *W[1000];
+  unsigned int *NW[1000];
+//Declare news MAN NEEEEEEEEEEEEEEEEWWWWWWWWWSSSSSSSSSSSSSS
 
-
+  N[1] = new unsigned int[1000];
+  NE[1] = new unsigned int[1000];
+  E[1] = new unsigned int[1000];
+  SE[1] = new unsigned int[1000];
+  S[1] = new unsigned int[1000];
+  SW[1] = new unsigned int[1000];
+  W[1] = new unsigned int[1000];
+  NW[1] = new unsigned int[1000];
+ 
 //  sets the weights (note we ignore the perimeter of water)
 //  Sets upper left corner
   S[1][1] = 500 + heightdif(grid[1][1], grid[2][1]);
@@ -86,6 +95,14 @@ Evac::Evac(int **grid, char **solution, int size)
 //Sets the middle weights
   for(i = 2; i < inland; i++)
   {
+  N[i] = new unsigned int[1000];
+  NE[i] = new unsigned int[1000];
+  E[i] = new unsigned int[1000];
+  SE[i] = new unsigned int[1000];
+  S[i] = new unsigned int[1000];
+  SW[i] = new unsigned int[1000];
+  W[i] = new unsigned int[1000];
+  NW[i] = new unsigned int[1000];
     //Sets the left column
     N[i][1] = S[i - 1][1];
     NE[i][1] = SW[i - 1][2];
@@ -111,6 +128,17 @@ Evac::Evac(int **grid, char **solution, int size)
     SW[i][inland] = 5 * (500 + heightdif(grid[i][inland], grid[i + 1][inland - 1]));
     S[i][inland] = 500 + heightdif(grid[i][inland], grid[i + 1][inland]);
   }
+
+
+  N[inland] = new unsigned int[1000];
+  NE[inland] = new unsigned int[1000];
+  E[inland] = new unsigned int[1000];
+  SE[inland] = new unsigned int[1000];
+  S[inland] = new unsigned int[1000];
+  SW[inland] = new unsigned int[1000];
+  W[inland] = new unsigned int[1000];
+  NW[inland] = new unsigned int[1000];
+
   //Sets the lower left corner
   N[inland][1] = S[inland - 1][1];
   NE[inland][1] = SW[inland - 1][2];
