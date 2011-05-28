@@ -86,6 +86,8 @@ Evac::Evac(int **grid, char **solution, int size)
     S[1][j] = 500 + heightdif(grid[1][j], grid[2][j]);
     SE[1][j] = 5 * (500 + heightdif(grid[1][j], grid[2][j + 1]));
     E[1][j] = 500 + heightdif(grid[1][j], grid[1][j + 1]);
+    if(j % 5 != 0)
+      S[1][j] = S[1][j] * 5;
   }
 //Sets upper right corner
   W[1][inland] = E[1][inland - 1];
@@ -109,17 +111,46 @@ Evac::Evac(int **grid, char **solution, int size)
     E[i][1] = 500 + heightdif(grid[i][1], grid[i][2]);
     SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
     S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
-    for(j = 2; j < inland; j++)
+    if(i % 5 == 0)
     {
-      //Sets the completely inland weights
-      N[i][j] = S[i - 1][j];
-      NE[i][j] = SW[i - 1][j + 1];
-      E[i][j] = 500 + heightdif(grid[i][j], grid[i][j + 1]);
-      SE[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j + 1]));
-      S[i][j] = 500 + heightdif(grid[i][j], grid[i + 1][j]);
-      SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
-      W[i][j] = E[i][j - 1];
-      NW[i][j] = SE[i - 1][j - 1];
+      N[i][1] = S[i - 1][1];
+      NE[i][1] = SW[i - 1][2];
+      E[i][1] = 500 + heightdif(grid[i][1], grid[i][2]);
+      SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
+      S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
+      for(j = 2; j < inland; j++)
+      {
+        //Sets the completely inland weights
+        N[i][j] = S[i - 1][j];
+        NE[i][j] = SW[i - 1][j + 1];
+        E[i][j] = 500 + heightdif(grid[i][j], grid[i][j + 1]);
+        SE[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j + 1]));
+        S[i][j] = 500 + heightdif(grid[i][j], grid[i + 1][j]);
+        SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
+        W[i][j] = E[i][j - 1];
+        NW[i][j] = SE[i - 1][j - 1];
+        if(j % 5 != 0)
+          S[i][j] = S[i][j] * 5;
+      }
+    } else {
+      N[i][1] = S[i - 1][1];
+      NE[i][1] = SW[i - 1][2];
+      E[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i][2]));
+      SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
+      S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
+      for(j = 2; j < inland; j++)
+      {
+        N[i][j] = S[i - 1][j];
+        NE[i][j] = SW[i - 1][j + 1];
+        E[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i][j + 1]));
+        SE[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j + 1]));
+        S[i][j] = 500 + heightdif(grid[i][j], grid[i + 1][j]);
+        SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
+        W[i][j] = E[i][j - 1];
+        NW[i][j] = SE[i - 1][j - 1];
+        if(j % 5 != 0)
+          S[i][j] = S[i][j] * 5;
+      }
     }
     //Sets the right column
     N[i][inland] = S[i - 1][inland];
@@ -139,23 +170,59 @@ Evac::Evac(int **grid, char **solution, int size)
   W[inland] = new unsigned int[1000];
   NW[inland] = new unsigned int[1000];
 
-  //Sets the lower left corner
-  N[inland][1] = S[inland - 1][1];
-  NE[inland][1] = SW[inland - 1][2];
-  E[inland][1] = 500 + heightdif(grid[inland][1], grid[inland][2]);
-  for(j = 0; j < inland; j++)
+  if(inland % 5 == 0)
   {
-    //Sets the lowest row
-    W[inland][j] = E[inland][j - 1];
-    NW[inland][j] = SE[inland - 1][j - 1];
-    N[inland][j] = S[inland - 1][j];
-    NE[inland][j] = SW[inland - 1][j + 1];
-    E[inland][j] = 500 + heightdif(grid[inland][j], grid[inland][j + 1]);
+    //Sets the lower left corner
+    N[inland][1] = S[inland - 1][1];
+    NE[inland][1] = SW[inland - 1][2];
+    E[inland][1] = 500 + heightdif(grid[inland][1], grid[inland][2]);
+    for(j = 0; j < inland; j++)
+    {
+      //Sets the lowest row
+      W[inland][j] = E[inland][j - 1];
+      NW[inland][j] = SE[inland - 1][j - 1];
+      N[inland][j] = S[inland - 1][j];
+      NE[inland][j] = SW[inland - 1][j + 1];
+      E[inland][j] = 500 + heightdif(grid[inland][j], grid[inland][j + 1]);
+    }
+    //Sets the lower right corner
+    W[inland][inland] = E[inland][inland - 1];
+    NW[inland][inland] = SE[inland - 1][inland - 1];
+    N[inland][inland] = S[inland - 1][inland];
+  } else {
+    //Sets the lower left corner
+    N[inland][1] = S[inland - 1][1];
+    NE[inland][1] = SW[inland - 1][2];
+    E[inland][1] =5 * (500 + heightdif(grid[inland][1], grid[inland][2]));
+    for(j = 0; j < inland; j++)
+    {
+      //Sets the lowest row
+      W[inland][j] = E[inland][j - 1];
+      NW[inland][j] = SE[inland - 1][j - 1];
+      N[inland][j] = S[inland - 1][j];
+      NE[inland][j] = SW[inland - 1][j + 1];
+      E[inland][j] = 5 * (500 + heightdif(grid[inland][j], grid[inland][j + 1]));
+    }
+    //Sets the lower right corner
+    W[inland][inland] = E[inland][inland - 1];
+    NW[inland][inland] = SE[inland - 1][inland - 1];
+    N[inland][inland] = S[inland - 1][inland];
   }
-  //Sets the lower right corner
-  W[inland][inland] = E[inland][inland - 1];
-  NW[inland][inland] = SE[inland - 1][inland - 1];
-  N[inland][inland] = S[inland - 1][inland];
+
+
+/*  while(1)
+  {
+    cin >> i >> j;
+    cout << "Grid:  " << grid[i][j] << endl;
+    cout << SW[i][j] << endl << S[i][j] << endl<<  SE[i][j] << endl << E[i][i] << endl;    
+  }
+*/
+
+
+
+
+
+
 
 //Sets the edges.  Ommits the perimeter to save time
 /*  for(i = 2; i < inland; i++)
