@@ -11,8 +11,8 @@ CND_CONF=Default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=MissingOutputInProject
-OUTPUT_BASENAME=MissingOutputInProject
+OUTPUT_PATH=./runEvac.out
+OUTPUT_BASENAME=runEvac.out
 PACKAGE_TOP_DIR=ecs60-hw5/
 
 # Functions
