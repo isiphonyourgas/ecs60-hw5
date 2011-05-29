@@ -329,7 +329,54 @@ Evac::Evac(int **grid, char **solution, int size)
     } else { truth[inland][inland] = false; }
   }
 
-
+  Plot *temp;
+  int x, y;
+//Shoves things into the heap
+  for(i = 0; i < count; i++)
+  {
+    x = high[i]->x - 1;
+    y = high[i]-> y;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 2, N[high[i]->x][y]);
+      //Shove temp into heap
+    }
+    y++;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 4, N[high[i]->x][y]);
+    }
+    x++;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 16, N[high[i]->x][y]);
+    }
+    x++;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 128, N[high[i]->x][y]);
+    }
+    y--;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 64, N[high[i]->x][y]);
+    }
+    y--;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 32, N[high[i]->x][y]);
+    }
+    x--;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 8, N[high[i]->x][y]);
+    }
+    x--;
+    if(truth[x][y] == false)
+    {
+      temp = new Plot(x, y, 1, N[high[i]->x][y]);
+    }
+  }
 /*  while(1)
   {
     cin >> i >> j;
