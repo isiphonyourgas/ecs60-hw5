@@ -42,6 +42,16 @@ class Evac {
     Evac(int **grid, char **solution, int size);
 
     Plot ***edges;
+    unsigned int *N[1000];
+    unsigned int *NE[1000];
+    unsigned int *E[1000];
+    unsigned int *SE[1000];
+    unsigned int *S[1000];
+    unsigned int *SW[1000];
+    unsigned int *W[1000];
+    unsigned int *NW[1000];
+    bool *truth[1000];
+
 };
 
 #endif	/* EVAC_H */
