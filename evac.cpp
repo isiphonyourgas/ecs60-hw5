@@ -1,6 +1,5 @@
 //  Author: Jason Wong, Jacob Mederos
 #include "evac.h"
-#include "BinaryHeap.h"
 #include <iostream>
 #include <bitset>
 #include <cmath>
@@ -65,7 +64,7 @@ Evac::Evac(int **grid, char **solution, int size)
   int i, j, inland, count, border;
   inland = size - 2;
   border = size - 1;
-  unsigned int *N[1000];
+/*  unsigned int *N[1000];
   unsigned int *NE[1000];
   unsigned int *E[1000];
   unsigned int *SE[1000];
@@ -73,7 +72,7 @@ Evac::Evac(int **grid, char **solution, int size)
   unsigned int *SW[1000];
   unsigned int *W[1000];
   unsigned int *NW[1000];
-  bool *truth[1000];
+  bool *truth[1000];*/
   Point *high[1000];
 //Declare news MAN NEEEEEEEEEEEEEEEEWWWWWWWWWSSSSSSSSSSSSSS
 
@@ -346,7 +345,7 @@ Evac::Evac(int **grid, char **solution, int size)
 
  
   
-  BinaryHeap <Plot*> heap(8000000);
+//  BinaryHeap <Plot*> heap(8000000);
   
 
 
@@ -363,3 +362,7 @@ Evac::Evac(int **grid, char **solution, int size)
 //  buildSideEdge(edges, size, grid);
 }//Constructor
 
+void Evac::dikstras(Plot p)
+{
+
+}//Diksttras

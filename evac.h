@@ -2,6 +2,9 @@
 #ifndef EVAC_H
 #define	EVAC_H
 
+#include "BinaryHeap.h"
+
+
 using namespace std;
 
 class Plot {
@@ -40,6 +43,7 @@ class Point {
 class Evac {
   public:
     Evac(int **grid, char **solution, int size);
+    void dikstras(Plot p);
 
     Plot ***edges;
     unsigned int *N[1000];
@@ -51,6 +55,7 @@ class Evac {
     unsigned int *W[1000];
     unsigned int *NW[1000];
     bool *truth[1000];
+    BinaryHeap <Plot*> heap(8000000);
 
 };
 
