@@ -1,5 +1,6 @@
 //  Author: Jason Wong, Jacob Mederos
 #include "evac.h"
+#include "BinaryHeap.h"
 #include <iostream>
 #include <bitset>
 #include <cmath>
@@ -13,11 +14,11 @@ inline int heightdif(int value1, int value2)
   return value;
 }
 
-Plot::Plot()
+Plot::Plot(int i, int j, int direction, int weight)
 {
-  N = NE = E = SE = S = SW = W = NW = 0;
+//  N = NE = E = SE = S = SW = W = NW = 0;
 }//Constructor for plot
-
+/*
 void Plot::buildEdge(int **grid, int i, int j, Plot ***edges)
 {
   n = 500 + heightdif(grid[i - 1][j], grid[i][j]);
@@ -48,7 +49,7 @@ void Plot::buildSideEdge(Plot ***edges, int size, int **grid)
 {
   
 }//BuildSideEdge
-
+*/
 
 Evac::Evac(int **grid, char **solution, int size) 
 {
@@ -218,8 +219,9 @@ Evac::Evac(int **grid, char **solution, int size)
   }
 */
 
-
-
+  
+  
+  BinaryHeap <Plot> heap(1000000);
 
 
 

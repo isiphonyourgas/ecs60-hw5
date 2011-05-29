@@ -6,12 +6,15 @@ using namespace std;
 
 class Plot {
 public:
-  Plot();
-  void buildEdge(int **grid, int i, int j, Plot ***edges);
-  void buildSideEdge(Plot ***edges, int size, int **grid);
+  Plot(int i, int j, int direction, int weight);
+//  void buildEdge(int **grid, int i, int j, Plot ***edges);
+//  void buildSideEdge(Plot ***edges, int size, int **grid);
  
-  Plot *N, *NE, *E, *SE, *S, *SW, *W, *NW;
-  int n, ne, e, se, s, sw, w, nw;
+//  Plot *N, *NE, *E, *SE, *S, *SW, *W, *NW;
+//  int n, ne, e, se, s, sw, w, nw;
+
+  int x, y;
+  int direction, weight;
  
 };//Nodes for class evac
 
