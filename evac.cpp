@@ -16,6 +16,7 @@ inline int heightdif(int value1, int value2)
 
 Plot::Plot(int i, int j, int direction, int weight)
 {
+
 //  N = NE = E = SE = S = SW = W = NW = 0;
 }//Constructor for plot
 /*
@@ -221,7 +222,7 @@ Evac::Evac(int **grid, char **solution, int size)
 
   
   
-  BinaryHeap <Plot> heap(1000000);
+ BinaryHeap <Plot*> heap(1000000);
 
 
 
