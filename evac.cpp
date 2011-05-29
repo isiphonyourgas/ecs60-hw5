@@ -14,10 +14,12 @@ inline int heightdif(int value1, int value2)
   return value;
 }
 
-Plot::Plot(int x, int y, int direction, int weight)
+Plot::Plot(int i, int j, int dir, int w)
 {
-  
-//  N = NE = E = SE = S = SW = W = NW = 0;
+  x = i;
+  y = j;
+  direction = dir;
+  weight = w;
 }//Constructor for plot
 /*
 void Plot::buildEdge(int **grid, int i, int j, Plot ***edges)
@@ -52,9 +54,10 @@ void Plot::buildSideEdge(Plot ***edges, int size, int **grid)
 }//BuildSideEdge
 */
 
-Point::Point(int x, int y)
+Point::Point(int i, int j)
 {
-
+  x = i;
+  y = j;
 }
 
 Evac::Evac(int **grid, char **solution, int size) 
@@ -336,15 +339,10 @@ Evac::Evac(int **grid, char **solution, int size)
   }
 */
 
-for(i = 0; i < size; i++)
+/*for(i = 0; i < count; i++)
 {
-  for(j = 0; j < size; j++)
-  {
-    if(truth[i][j] == true)
-    { cout << "1"; } else {cout << "-";}
-  }
-  cout << endl;
-} 
+  cout << high[i]->x << "  " << high[i]->y<< endl;;
+}*/
 
  
   
