@@ -344,37 +344,37 @@ Evac::Evac(int **grid, char **solution, int size)
     y++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 4, N[high[i]->x][y]);
+      temp = new Plot(x, y, 4, NE[high[i]->x][y]);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 16, N[high[i]->x][y]);
+      temp = new Plot(x, y, 16, E[high[i]->x][y]);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 128, N[high[i]->x][y]);
+      temp = new Plot(x, y, 128, SE[high[i]->x][y]);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 64, N[high[i]->x][y]);
+      temp = new Plot(x, y, 64, S[high[i]->x][y]);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 32, N[high[i]->x][y]);
+      temp = new Plot(x, y, 32, SW[high[i]->x][y]);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 8, N[high[i]->x][y]);
+      temp = new Plot(x, y, 8, W[high[i]->x][y]);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 1, N[high[i]->x][y]);
+      temp = new Plot(x, y, 1, NW[high[i]->x][y]);
     }
   }
 /*  while(1)
