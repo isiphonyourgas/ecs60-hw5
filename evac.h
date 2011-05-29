@@ -5,8 +5,9 @@
 using namespace std;
 
 class Plot {
-public:
-    Plot(int i, int j, int direction, int weight);
+  public:
+    Plot(int x, int y, int direction, int weight);
+    ~Plot();
     //  void buildEdge(int **grid, int i, int j, Plot ***edges);
     //  void buildSideEdge(Plot ***edges, int size, int **grid);
 
@@ -29,8 +30,15 @@ public:
     }
 }; //Nodes for class evac
 
+class Point {
+  public:
+    Point(int x, int y);
+//    ~Point();
+
+    int x, y;
+};
 class Evac {
-public:
+  public:
     Evac(int **grid, char **solution, int size);
 
     Plot ***edges;
