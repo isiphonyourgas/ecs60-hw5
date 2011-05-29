@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <df name="ecs60-hw5" root=".">
+      <in>AvlTree.cpp</in>
+      <in>AvlTree.h</in>
+      <in>BinaryHeap.cpp</in>
+      <in>BinaryHeap.h</in>
+      <in>BinarySearchTree.cpp</in>
+      <in>BinarySearchTree.h</in>
+      <in>BinomialQueue.cpp</in>
+      <in>BinomialQueue.h</in>
+      <in>CPUTimer.h</in>
+      <in>CreateFile.cpp</in>
+      <in>CursorList2.cpp</in>
+      <in>CursorList2.h</in>
+      <in>LeftistHeap.cpp</in>
+      <in>LeftistHeap.h</in>
+      <in>LinkedList.cpp</in>
+      <in>LinkedList.h</in>
+      <in>QuadraticProbing.cpp</in>
+      <in>QuadraticProbing.h</in>
+      <in>QueueAr.cpp</in>
+      <in>QueueAr.h</in>
+      <in>QueueLL.cpp</in>
+      <in>QueueLL.h</in>
+      <in>SeparateChaining.cpp</in>
+      <in>SeparateChaining.h</in>
+      <in>SkipList.cpp</in>
+      <in>SkipList.h</in>
+      <in>SplayTree.cpp</in>
+      <in>SplayTree.h</in>
+      <in>StackAr.cpp</in>
+      <in>StackAr.h</in>
+      <in>StackLi.cpp</in>
+      <in>StackLi.h</in>
+      <in>dsexceptions.h</in>
+      <in>evac.cpp</in>
+      <in>evac.h</in>
+      <in>mystring.h</in>
+      <in>runevac.cpp</in>
+      <in>string.cpp</in>
+      <in>vector.cpp</in>
+      <in>vector.h</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+      <itemPath>Makefile-ecs60-hw5.mk</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile-ecs60-hw5.mk</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>$(MAKE) -f Makefile</buildCommand>
+          <cleanCommand>$(MAKE) -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="AvlTree.cpp" ex="true" tool="1">
+      </item>
+      <item path="AvlTree.h" ex="true" tool="3">
+      </item>
+      <item path="BinarySearchTree.cpp" ex="true" tool="1">
+      </item>
+      <item path="BinarySearchTree.h" ex="true" tool="3">
+      </item>
+      <item path="BinomialQueue.cpp" ex="true" tool="1">
+      </item>
+      <item path="BinomialQueue.h" ex="true" tool="3">
+      </item>
+      <item path="CPUTimer.h" ex="true" tool="3">
+      </item>
+      <item path="CreateFile.cpp" ex="true" tool="1">
+      </item>
+      <item path="CursorList2.cpp" ex="true" tool="1">
+      </item>
+      <item path="CursorList2.h" ex="true" tool="3">
+      </item>
+      <item path="LeftistHeap.cpp" ex="true" tool="1">
+      </item>
+      <item path="LeftistHeap.h" ex="true" tool="3">
+      </item>
+      <item path="LinkedList.cpp" ex="true" tool="1">
+      </item>
+      <item path="LinkedList.h" ex="true" tool="3">
+      </item>
+      <item path="QuadraticProbing.cpp" ex="true" tool="1">
+      </item>
+      <item path="QuadraticProbing.h" ex="true" tool="3">
+      </item>
+      <item path="QueueAr.cpp" ex="true" tool="1">
+      </item>
+      <item path="QueueAr.h" ex="true" tool="3">
+      </item>
+      <item path="QueueLL.cpp" ex="true" tool="1">
+      </item>
+      <item path="QueueLL.h" ex="true" tool="3">
+      </item>
+      <item path="SeparateChaining.cpp" ex="true" tool="1">
+      </item>
+      <item path="SeparateChaining.h" ex="true" tool="3">
+      </item>
+      <item path="SkipList.cpp" ex="true" tool="1">
+      </item>
+      <item path="SkipList.h" ex="true" tool="3">
+      </item>
+      <item path="SplayTree.cpp" ex="true" tool="1">
+      </item>
+      <item path="SplayTree.h" ex="true" tool="3">
+      </item>
+      <item path="StackAr.cpp" ex="true" tool="1">
+      </item>
+      <item path="StackAr.h" ex="true" tool="3">
+      </item>
+      <item path="StackLi.cpp" ex="true" tool="1">
+      </item>
+      <item path="StackLi.h" ex="true" tool="3">
+      </item>
+      <item path="mystring.h" ex="true" tool="3">
+      </item>
+      <item path="runevac.cpp" ex="true" tool="1">
+      </item>
+      <item path="string.cpp" ex="true" tool="1">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
