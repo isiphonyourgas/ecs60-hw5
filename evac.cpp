@@ -386,15 +386,15 @@ Evac::Evac(int **grid, char **solution, int size)
     delete high[i];
   }
 
-/*
+
 while(!heap.isEmpty())
 {
   heap.deleteMin(temp);
-  if(temp->weight == 0)
-  {
+  
+  
   cout << temp->x << "   " << temp->y << "   " << temp->direction << "   " << temp->weight << endl;
-  }
-}*/
+  
+}
 /*  while(1)
   {
     cin >> i >> j;
