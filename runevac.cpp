@@ -54,8 +54,7 @@ void checkSolution(char **theirSolution, char **solutions, int size)
     {
       if(theirSolution[i][j] != solutions[i][j])
         cout << "Invalid at i: " << i << " j: "  << j << " yours: "
-           << theirSolution[i][j] << " possible: " << solutions[i][j] << endl;
-;
+            << (unsigned) theirSolution[i][j] << " possible: " << (unsigned) solutions[i][j] << endl;
     } // for each intersection column
 } // checkSolution()
 
