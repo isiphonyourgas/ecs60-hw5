@@ -10,211 +10,74 @@ inline int heightdif(int value1, int value2)
   value = value1 - value2;
   if(value < 0)
     value = value * -1;
+  
   return value;
 }
 
-inline void thirtyOpsMid(int i, int j, char **solution)
+inline int edgeweight(int i, int j, int **grid, int dir)
 {
-  int x, y;
-  int rx, ry;
-  x = i % 5;
-  y = j % 5;
-  rx = i - x;
-  ry = j  - y;
-  if(x == 0)
+  int value;
+  value = 500;
+  if(dir < 0)
   {
-    if(y == 0)
+    if(dir < -2)
     {
-      solution[rx][ry] = 0;
-    } else {
-      if(y < 3)
+      if(dir == -3)
       {
-        solution[rx][ry] = 16;
-      } else {//On a road
-        solution[rx][ry + 1] = 8;
+        value += heightdif(grid[i][j], grid[i + 1][j]);
+        if(j % 5 ==  0)
+          value = value / 5;
+        return value;//North
+      } else {
+        //Nw
+        value += heightdif(grid[i][j], grid[i + 1][j + 1]);
+        return value;
+      }
+    } else {
+      if(dir == -1)
+      {
+        //E
+        value += heightdif(grid[i][j], grid[i][j - 1]);
+        if(i % 5 == 0)
+          value = value / 5;
+        return value;
+      } else {
+        //NE
+        value += heightdif(grid[i][j], grid[i + 1][j - 1]);
+        return value;
       }
     }
   } else {
-    if(y == 0)
+    if(dir < 2)
     {
-      if(x < 3)
+      if(dir == 1)
       {
-        solution[rx][ry] = 64;
+        //S
+        value += heightdif(grid[i][j], grid[i - 1][j]);
+        if(j % 5 == 0)
+          value = value / 5;
+        return value;
       } else {
-        solution[rx + 1][ry] = 2;
+        //SE
+        value += heightdif(grid[i][j], grid[i - 1][j - 1]);
+        return value;
       }
     } else {
-      if(x <= 2) //Upper
+      if(dir == 2)
       {
-        if(y <= 2) //Left
-        {
-          if(x == y)//Upper left diag
-          {
-            solution[rx][ry] = 128;
-          } else {//Path is straight
-            if(x > y)//Move right
-            {
-              solution[rx][ry] = 16;
-            } else {//Move down
-              solution[rx][ry] = 64;
-            }
-          }
-        } else {//Right
-          ry += 5;
-          if(x == 3)
-          {
-            if(y == 1)
-            {
-              solution[rx][ry] = 8;
-            } else { // Y is 2
-              solution[rx][ry] = 32;
-            }
-          } else { //X is 4
-            if(y == 1)
-            {
-              solution[rx][ry] = 32;
-            } else {//Y is 2
-              solution[rx][ry] = 64;
-            }
-          }
-        }
-      } else {//Lower
-        rx += 5;;
-        if(y <= 2) //Left
-        {
-          if(x == 3)//Diag
-          {
-            if(y == 2)
-            {
-              solution[rx][ry] = 4;
-            } else {// y = 1
-              solution[rx][ry] = 2;
-            }
-          } else {//x = 4
-            if(y == 1)
-            {
-              solution[rx][ry] = 4;
-            } else {
-              solution[rx][ry] = 16;
-            }
-          }
-        } else {//Right
-          ry += 5;
-          if(x == y)
-          {
-            solution[rx][ry] = 1;
-          } else { //Not diag
-            if(x == 3)
-            {
-              solution[rx][ry] = 8;
-            } else {
-              solution[rx][ry] = 2;
-            }
-          }
-        }
+        //SW
+        value += heightdif(grid[i][j], grid[i - 1][j + 1]);
+        return value;
+      } else {
+        //W
+        value += heightdif(grid[i][j], grid[i][j + 1]);
+        if(i % 5 == 0 )
+          value = value / 5;
+        return value;
       }
     }
   }
 }
-
-void thirtyOpsUpperLeft(int x, int y, char **solution)
-{
-  if(x == y)
-  {
-    solution[5][5] = 1;
-  } else {
-    if(x > y)
-    {
-      solution[5][5] = 8;
-    } else {
-      solution[5][5] = 2;
-    }
-  }
-}
-
-inline void thirtyOpsTop(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOpsUpperRight(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOpsLeft(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOpsLowerLeft(int i, int j, char ** solution)
-{
-
-}
-
-inline void thirtyOpsLowerRight(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOpsRight(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOpsLower(int i, int j, char **solution)
-{
-
-}
-
-inline void thirtyOps(int i, int j, char **solution, int size)
-{
-  int x, y, sizeCheck;
-  x = i - (i % 5);
-  y = j - (j % 5);
-  sizeCheck = size - (size % 5) - 5;
-  if(i < 5)
-  {
-    if(j < 5)
-    {
-      thirtyOpsUpperLeft(i, j, solution);
-    } else {
-      if(y == sizeCheck)//Checking for right croner
-      {
-        thirtyOpsUpperRight(i, j, solution);
-      } else {//Top row
-        thirtyOpsTop(i, j, solution);
-      }
-    }
-  } else {
-    if(j < 5)
-    {
-      if(x == sizeCheck)//Checking for lower left corner
-      {
-        thirtyOpsLowerLeft(i,  j, solution);
-      } else {
-        thirtyOpsLeft(i, j, solution);
-      }
-    } else {
-      if(y == sizeCheck)
-      {
-        if(x == sizeCheck)
-        {
-          thirtyOpsLowerRight(i, j, solution);
-        } else {
-          thirtyOpsRight(i, j, solution);
-        }
-      } else {
-        if(x == sizeCheck)
-        {
-          thirtyOpsLower(i, j, solution);
-        } else {
-          thirtyOpsMid(i, j, solution);
-        }
-      }
-    }
-  }
-}//thirtyOps
 
 Plot::Plot(int i, int j, int dir, int w)
 {
@@ -230,47 +93,412 @@ Point::Point(int i, int j)
   y = j;
 }
 
-Evac::Evac(int **grid, char **solution, int size) 
+Evac::Evac(int **grid, char **solution, int Size) 
 {
   int i, j, inland, count, border;
+  size = Size;
   inland = size - 2;
   border = size - 1;
-  Point *high[1000000];
+  count = 0;
+//  Point *high[1000000];
   count++;
-  for(i = 0; i < size; i++)
+  for(i = 0; i < size; i += 5)
   {
+    weights[i] = new int[1000];
     truth[i] = new bool[1000];
+    for(j = 0; j < size; j += 5)
+    {
+      weights[i][j] = 0;
+    }
+  }
+  //Initialize Weights
+  for(i = 0; i < size; i += 5)
+  {
+//    truth[i] = new bool[1000];
     if((i == 0) || i == border)
     {
       for(j = 0; j < size; j++)
       {
         truth[i][j] = true;
+        if( j % 5 == 0)
+          this->search(i, j, solution, grid);
       }
     } else {
-      for(j = 0; j < size; j++)
+      for(j = 0; j < size; j += 5)
       {
-        truth[i][j] = false;
-        if(grid[i][j] == 30)
-        {
-          thirtyOps(i,j, solution, size);
-          truth[i][j] = true;
-        }
+        this->search(i,j, solution, grid);
       }
     }
     truth[i][0] = true;
     truth[i][border] = true;
   }
-  this->dikstras(solution);
 
+  for(i = 0; i < size; i++)
+  {
+    for( j = 0; j < size; j++)
+    {
+      cout << (unsigned int)solution[i][j] << "   ";
+    }
+    cout << endl;
+  }
+ // this->dijkstras(solution);
 }//Constructor
 
-void Evac::dikstras(char **solution)
+void Evac::dijkstras1(int i, int j, char **solution, int **grid)
 {
-  Plot *temp, *temp2;
-  int x, y, direction, dist;
-  while(!heap.isEmpty())
+  bool temptrue[8][8];
+  int a, b;
+  int indexX = i / 5;
+  int indexY = j / 5;
+  int corner = 0;
+  BinaryHeap <Plot*>tempHeap(1000);
+  tempHeap.makeEmpty(); 
+  Plot *temp;
+if(i == 0 && j == 20 )
+  cout << "here";
+  //set the truth values
+  for(a = 0; a < 7; a++)
   {
-
- 
+    temptrue[a][0] = true;
+    temptrue[a][7] = true;
+    for(b = 1; b < 6; b++)
+    {
+      temptrue[a][b] = false;
+    }
   }
+  for(a = 0; a < 8; a++)
+  {
+    temptrue[0][a] = true;
+    temptrue[7][a] = true;
+  }
+  if(grid[i][j + 1] == -99)
+  {
+    temptrue[1][1] = true;
+    temptrue[1][2] = true;
+    temptrue[1][3] = true;
+    temptrue[1][4] = true;
+    temptrue[1][5] = true;
+    temptrue[1][6] = true;
+  }
+  if(i + 5 < size)
+  {
+    if(grid[i + 5][j + 4] == -99)
+    {
+      temptrue[6][1] = true;
+      temptrue[6][2] = true;
+      temptrue[6][3] = true;
+      temptrue[6][4] = true;
+      temptrue[6][5] = true;
+      temptrue[6][6] = true;
+    }
+  } else {
+      temptrue[6][1] = true;
+      temptrue[6][2] = true;
+      temptrue[6][3] = true;
+      temptrue[6][4] = true;
+      temptrue[6][5] = true;
+      temptrue[6][6] = true;
+  }
+  if(grid[i + 1][j] == -99)
+  {
+    temptrue[1][1] = true;
+    temptrue[2][1] = true;
+    temptrue[3][1] = true;
+    temptrue[4][1] = true;
+    temptrue[5][1] = true;
+    temptrue[6][1] = true;
+  }
+  if( j + 5 < size)
+  {
+    if(grid[i + 4][j + 5] == -99)
+    {
+      temptrue[1][1] = true;
+      temptrue[2][1] = true;
+      temptrue[3][1] = true;
+      temptrue[4][1] = true;
+      temptrue[5][1] = true;
+      temptrue[6][1] = true;
+    }
+  } else {
+      temptrue[1][1] = true;
+      temptrue[2][1] = true;
+      temptrue[3][1] = true;
+      temptrue[4][1] = true;
+      temptrue[5][1] = true;
+      temptrue[6][1] = true;
+  }
+/*
+  if(temptrue[1][1] == true)
+    corner++;
+  if(temptrue[1][6] == true)
+    corner++;
+  if(temptrue[6][1] == true)
+    corner++;
+  if(temptrue[6][6] == true)
+    corner++;*/
+  int x2, y2;
+  int x, y;
+  for(a = 0; a < count; a++)
+  { 
+    x2 = high[a]->x % 5 + 1;
+    y2 = high[a]->y % 5 + 1;
+    x = high[a]->x;
+    y = high[a]->y;
+    temptrue[x2][y2] = true;
+    x2--;
+    x--;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 64, edgeweight(x, y, grid, -3));
+      tempHeap.insert(temp);
+    }
+    y2++;
+    y++;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 32, edgeweight(x, y, grid, -2));
+      tempHeap.insert(temp);
+    }
+    x2++;
+    x++;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 8, edgeweight(x, y, grid, -1));
+      tempHeap.insert(temp);
+    }
+    x2++;
+    x++;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 1, edgeweight(x, y, grid, 0));
+      tempHeap.insert(temp);
+    }
+    y2--;
+    y--;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 2, edgeweight(x, y, grid, 1));
+      tempHeap.insert(temp);
+    }
+    y2--;
+    y--;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 4, edgeweight(x, y, grid, 2));
+      tempHeap.insert(temp);
+    }
+    x2--;
+    x--;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 16, edgeweight(x, y, grid, 3));
+      tempHeap.insert(temp);
+    }
+    x2--;
+    x--;
+    if(temptrue[x2][y2] == false)
+    {
+      temp = new Plot(x2,y2, 128, edgeweight(x, y, grid, -4));
+      tempHeap.insert(temp);
+    }
+    delete high[a];
+  }
+  count = 0;
+//All things shoved into heap and ready to go
+  if(temptrue[1][1] == true)
+    corner++;
+  if(temptrue[1][6] == true)
+    corner++;
+  if(temptrue[6][1] == true)
+    corner++;
+  if(temptrue[6][6] == true)
+    corner++;
+  
+  Plot *temp2;
+  int dist, rx, ry;
+  while(corner < 4)
+  {
+    tempHeap.deleteMin(temp);
+    x = temp->x;
+    y = temp->y;
+    if(temptrue[x][y] == false)
+    {
+      rx = temp->x + i - 1;
+      ry = temp->y + j - 1;
+      temptrue[x][y] = true;
+      dist = temp->weight;
+      if((x == 1) && (y == 1))
+        corner++;
+      if((x == 1) && (y == 6))
+        corner++;
+      if((x == 6) && (y == 1))
+        corner++;
+      if((x == 6) && (y == 6))
+        corner++;
+      x--;
+      rx--;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 64, dist + edgeweight(rx,ry, grid, -3));
+        tempHeap.insert(temp2);
+      }
+      y++;
+      ry++;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 32, dist + edgeweight(rx,ry, grid, -2));
+        tempHeap.insert(temp2);
+      }
+      x++;
+      rx++;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 8, dist + edgeweight(rx,ry, grid, -1));
+        tempHeap.insert(temp2);
+      }
+      x++;
+      rx++;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 1, dist + edgeweight(rx,ry, grid, 0));
+        tempHeap.insert(temp2);
+      }
+      y--;
+      ry--;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 2, dist + edgeweight(rx,ry, grid, 1));
+        tempHeap.insert(temp2);
+      }
+      y--;
+      ry--;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 4, dist + edgeweight(rx,ry, grid, 2));
+        tempHeap.insert(temp2);
+      }
+      x--;
+      rx--;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 16, dist + edgeweight(rx,ry, grid, 3));
+        tempHeap.insert(temp2);
+      }
+      x--;
+      rx--;
+      if(temptrue[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 128, dist + edgeweight(rx,ry, grid, -4));
+        tempHeap.insert(temp2);
+      }
+      x++;
+      y++;
+      if(x == 1)
+      {
+        if(y == 1)
+        {
+          if(truth[i][j] == false)
+          {
+            solution[i][j] = temp->direction;
+            weights[i][j] = temp->weight;
+          } else {
+            if(temp->weight < weights[i][j])
+            {
+              solution[i][j] = temp->direction;
+              weights[i][j] = temp->weight;
+            }
+          }
+          if(temptrue[x][y] == false)
+            corner++;
+          //Upper left C
+        } else {
+          if(y == 6)
+          {
+            y2 = j + 5;
+            if(truth[i][y2] == false)
+            {
+              solution[i][y2] = temp->direction;
+              weights[i][y2] = temp->weight;
+            } else {
+              if(temp->weight < weights[i][y2])
+              {
+                solution[i][y2] = temp->direction;
+                weights[i][y2] = temp->weight;
+              }
+            //upper right C
+            }
+            if(temptrue[x][y] == false)
+              corner++;
+          }
+        }
+      } else {
+        if(x == 6)
+        {
+          if(y == 1)
+          {
+            x2 = i + 5;
+            if(truth[x2][j] == false)
+            {
+              solution[x2][j] = temp->direction;
+              weights[x2][j] = temp->weight;
+            } else {
+            if(temp->weight < weights[x2][j])
+            {
+              solution[x2][j] = temp->direction;
+              weights[x2][j] = temp->weight;
+            }
+          //Lower left
+            }
+            if(temptrue[x][y] == false)
+              corner++;
+          } else {
+            if(y == 6)
+            {
+              x2 = i + 5;
+              y2 = j + 5;
+              if(truth[x2][y2] == false)
+              {
+                solution[x2][y2] = temp->direction;
+                weights[x2][y2] = temp->weight;
+              } else {
+                if(temp->weight < weights[x2][y2])
+                {
+                  solution[x2][y2] = temp->direction;
+                  weights[x2][y2] = temp->weight;
+                }
+            //lower right
+              }
+              if(temptrue[x][y] == false)
+                corner++;
+            }
+          }
+        }
+      }//Else
+  //    temptrue[x][y] = true;
+    }
+  }
+  tempHeap.makeEmpty();
+
 }//Diksttras
+
+void Evac::search(int i, int j, char **solution, int **grid)
+{
+  int a, b;
+  int v, h;
+  v = i + 5;
+  h = j + 5;
+  for(a = i; a < v; a++)
+  {
+    for(b = j; b < h; b++)
+    {
+      if(grid[a][b] == 30)
+      {
+ //       truth[a][b] = true;
+        high[count] = new Point(a,b);
+        count++;
+      }
+    }
+  }
+  if(count != 0)
+    this->dijkstras1(i, j, solution, grid);
+}
