@@ -177,8 +177,6 @@ Evac::Evac(int **grid, char **solution, int size)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
-if(j == 419)
-  cout << "Here";
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)
@@ -204,8 +202,6 @@ if(j == 419)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
-if(j == 419)
-  cout << "Here";
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)
@@ -342,59 +338,63 @@ if(j == 419)
     y = high[i]-> y;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 2, N[high[i]->x][y]);
+      temp = new Plot(x, y, 2, N[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 4, NE[high[i]->x][y]);
+      temp = new Plot(x, y, 4, NE[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 16, E[high[i]->x][y]);
+      temp = new Plot(x, y, 16, E[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 128, SE[high[i]->x][y]);
+      temp = new Plot(x, y, 128, SE[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 64, S[high[i]->x][y]);
+      temp = new Plot(x, y, 64, S[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 32, SW[high[i]->x][y]);
+      temp = new Plot(x, y, 32, SW[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 8, W[high[i]->x][y]);
+      temp = new Plot(x, y, 8, W[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 1, NW[high[i]->x][y]);
+      temp = new Plot(x, y, 1, NW[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
+    delete high[i];
   }
 
-
+/*
 while(!heap.isEmpty())
 {
   heap.deleteMin(temp);
+  if(temp->weight == 0)
+  {
   cout << temp->x << "   " << temp->y << "   " << temp->direction << "   " << temp->weight << endl;
-}
+  }
+}*/
 /*  while(1)
   {
     cin >> i >> j;
