@@ -73,7 +73,7 @@ Evac::Evac(int **grid, char **solution, int size)
   unsigned int *W[1000];
   unsigned int *NW[1000];
   bool *truth[1000];*/
-  Point *high[1000];
+  Point *high[1000000];
 //Declare news MAN NEEEEEEEEEEEEEEEEWWWWWWWWWSSSSSSSSSSSSSS
 
   N[1] = new unsigned int[1000];
@@ -177,6 +177,8 @@ Evac::Evac(int **grid, char **solution, int size)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
+if(j == 419)
+  cout << "Here";
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)
@@ -202,6 +204,8 @@ Evac::Evac(int **grid, char **solution, int size)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
+if(j == 419)
+  cout << "Here";
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)

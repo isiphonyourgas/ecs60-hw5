@@ -10,7 +10,7 @@ using namespace std;
 class Plot {
   public:
     Plot(int i, int j, int dir, int w);
-    ~Plot();
+   // ~Plot();
     //  void buildEdge(int **grid, int i, int j, Plot ***edges);
     //  void buildSideEdge(Plot ***edges, int size, int **grid);
 
