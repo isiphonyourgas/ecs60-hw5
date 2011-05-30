@@ -335,7 +335,7 @@ Evac::Evac(int **grid, char **solution, int size)
   for(i = 0; i < count; i++)
   {
     x = high[i]->x - 1;
-    y = high[i]-> y;
+    y = high[i]->y;
     if(truth[x][y] == false)
     {
       temp = new Plot(x, y, 2, N[high[i]->x][high[i]->y]);
@@ -386,15 +386,7 @@ Evac::Evac(int **grid, char **solution, int size)
     delete high[i];
   }
 
-
-while(!heap.isEmpty())
-{
-  heap.deleteMin(temp);
-  
-  
-  cout << temp->x << "   " << temp->y << "   " << temp->direction << "   " << temp->weight << endl;
-  
-}
+  this->dikstras(solution);
 
 /*  while(1)
   {
@@ -428,7 +420,72 @@ while(!heap.isEmpty())
 //  buildSideEdge(edges, size, grid);
 }//Constructor
 
-void Evac::dikstras(Plot p)
+void Evac::dikstras(char **solution)
 {
+  Plot *temp, *temp2;
+  int x, y, direction, dist;
+  while(!heap.isEmpty())
+  {
+    heap.deleteMin(temp);
+    if(truth[temp->x][temp->y] == false)
+    {
+      x = temp->x - 1;
+      y = temp->y;
+      truth[temp->x][temp->y] = true;
+      dist = temp->weight;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 2, dist + N[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      y++;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 4, dist + NE[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      x++;
+      if(truth[x][y] == false)
+      {
+      temp2 = new Plot(x, y, 16, dist + E[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      x++;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 128, dist + SE[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      y--;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 64, dist + S[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      y--;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 32, dist + SW[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      x--;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 8, dist + W[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      x--;
+      if(truth[x][y] == false)
+      {
+        temp2 = new Plot(x, y, 1, dist + NW[temp->x][temp->y]);
+        heap.insert(temp2);
+      }
+      //Shove new values into heap
 
+      solution[temp->x][temp->y] = temp->direction;
+    }
+
+
+ 
+  }
 }//Diksttras

@@ -43,7 +43,7 @@ class Point {
 class Evac {
   public:
     Evac(int **grid, char **solution, int size);
-    void dikstras(Plot p);
+    void dikstras(char **solution);
 
     Plot ***edges;
     unsigned int *N[1000];
