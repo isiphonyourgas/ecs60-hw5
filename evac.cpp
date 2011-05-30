@@ -114,7 +114,7 @@ Evac::Evac(int **grid, char **solution, int size)
     E[1][j] = 500 + heightdif(grid[1][j], grid[1][j + 1]);
     weights[1][j] = 0;
     truth[0][j] = true;
-    if(j % 5 != 0)
+    if(j % 5 == 0)
       S[1][j] = S[1][j] / 5;
     if(grid[1][j] == 30)
     {
@@ -428,8 +428,7 @@ cout << endl;
 /*  while(1)
   {
     cin >> i >> j;
-    cout << "Grid:  " << grid[i][j] << endl;
-    cout << SW[i][j] << endl << S[i][j] << endl<<  SE[i][j] << endl << E[i][i] << endl;    
+    cout << "Value: " << grid[i][j] << " Weights: " << weights[i][j] << "     Direction: " << (unsigned int)solution[i][j] << endl; 
   }
 */
 
@@ -443,8 +442,17 @@ cout << endl;
 //  BinaryHeap <Plot*> heap(8000000);
   
 
-//  cout << weights[4][20] << endl << weights[5][21] << endl;
+  cout << weights[4][521] << endl << weights[4][520] << endl;
 
+/*
+for(i = 0; i < 10; i++)
+{
+  for(j = 515; j < 525; j++)
+  {
+    cout << grid[i][j] << " ";
+  }
+  cout << endl;
+}*/
 
 //Sets the edges.  Ommits the perimeter to save time
 /*  for(i = 2; i < inland; i++)
