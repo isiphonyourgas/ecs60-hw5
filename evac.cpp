@@ -395,6 +395,7 @@ while(!heap.isEmpty())
   cout << temp->x << "   " << temp->y << "   " << temp->direction << "   " << temp->weight << endl;
   
 }
+
 /*  while(1)
   {
     cin >> i >> j;
