@@ -86,6 +86,7 @@ Evac::Evac(int **grid, char **solution, int size)
   NW[1] = new unsigned int[1000];
   truth[1] = new bool[1000];
   truth[0] = new bool[1000];
+  weights[1] = new int[1000];
   count = 0;
  
 //  sets the weights (note we ignore the perimeter of water)
@@ -93,6 +94,7 @@ Evac::Evac(int **grid, char **solution, int size)
   S[1][1] = 500 + heightdif(grid[1][1], grid[2][1]);
   SE[1][1] = 5 * (500 + heightdif(grid[1][1], grid[2][2]));
   E[1][1] = 500 + heightdif(grid[1][1], grid[1][2]);
+  weights[1][0] = 0;
   truth[0][0] = true;
   truth[0][1] = true;
   truth[1][0] = true;
@@ -110,6 +112,7 @@ Evac::Evac(int **grid, char **solution, int size)
     S[1][j] = 500 + heightdif(grid[1][j], grid[2][j]);
     SE[1][j] = 5 * (500 + heightdif(grid[1][j], grid[2][j + 1]));
     E[1][j] = 500 + heightdif(grid[1][j], grid[1][j + 1]);
+    weights[1][j] = 0;
     truth[0][j] = true;
     if(j % 5 != 0)
       S[1][j] = S[1][j] * 5;
@@ -124,6 +127,7 @@ Evac::Evac(int **grid, char **solution, int size)
   W[1][inland] = E[1][inland - 1];
   SW[1][inland] = 5 * (500 + heightdif(grid[1][inland], grid[2][inland - 1]));
   S[1][inland] = 500 + heightdif(grid[1][inland], grid[2][inland]);
+  weights[1][inland] = 0;
   truth[0][inland] = true;
   truth[0][border] = true;
   truth[1][border] = true;
@@ -145,6 +149,7 @@ Evac::Evac(int **grid, char **solution, int size)
   SW[i] = new unsigned int[1000];
   W[i] = new unsigned int[1000];
   NW[i] = new unsigned int[1000];
+  weights[i] = new int[1000];
   truth[i] = new bool[1000];
     //Sets the left column
     N[i][1] = S[i - 1][1];
@@ -152,6 +157,7 @@ Evac::Evac(int **grid, char **solution, int size)
     E[i][1] = 500 + heightdif(grid[i][1], grid[i][2]);
     SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
     S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
+    weights[i][1] = 0;
     truth[i][0] = true;
     if(grid[i][1] == 30)
     {
@@ -166,6 +172,7 @@ Evac::Evac(int **grid, char **solution, int size)
       E[i][1] = 500 + heightdif(grid[i][1], grid[i][2]);
       SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
       S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
+      weights[i][1] = 0;
       for(j = 2; j < inland; j++)
       {
         //Sets the completely inland weights
@@ -177,6 +184,7 @@ Evac::Evac(int **grid, char **solution, int size)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
+        weights[i][j] = 0;
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)
@@ -192,6 +200,7 @@ Evac::Evac(int **grid, char **solution, int size)
       E[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i][2]));
       SE[i][1] = 5 * (500 + heightdif(grid[i][1], grid[i + 1][2]));
       S[i][1] = 500 + heightdif(grid[i][1], grid[i + 1][1]);
+      weights[i][1] = 0;
       for(j = 2; j < inland; j++)
       {
         N[i][j] = S[i - 1][j];
@@ -202,6 +211,7 @@ Evac::Evac(int **grid, char **solution, int size)
         SW[i][j] = 5 * (500 + heightdif(grid[i][j], grid[i + 1][j - 1]));
         W[i][j] = E[i][j - 1];
         NW[i][j] = SE[i - 1][j - 1];
+        weights[i][j] = 0;
         if(j % 5 != 0)
           S[i][j] = S[i][j] * 5;
         if(grid[i][j] == 30)
@@ -219,6 +229,7 @@ Evac::Evac(int **grid, char **solution, int size)
     W[i][inland] = E[i][inland - 1];
     SW[i][inland] = 5 * (500 + heightdif(grid[i][inland], grid[i + 1][inland - 1]));
     S[i][inland] = 500 + heightdif(grid[i][inland], grid[i + 1][inland]);
+    weights[i][inland] = 0;
     truth[i][border] = true;
     if(grid[i][inland] == 30)
     {
@@ -237,6 +248,7 @@ Evac::Evac(int **grid, char **solution, int size)
   SW[inland] = new unsigned int[1000];
   W[inland] = new unsigned int[1000];
   NW[inland] = new unsigned int[1000];
+  weights[inland] = new int[1000];
   truth[inland] = new bool[1000];
   truth[border] = new bool[1000];
 
@@ -246,6 +258,7 @@ Evac::Evac(int **grid, char **solution, int size)
     N[inland][1] = S[inland - 1][1];
     NE[inland][1] = SW[inland - 1][2];
     E[inland][1] = 500 + heightdif(grid[inland][1], grid[inland][2]);
+    weights[inland][1] = 0;
     truth[inland][0] = true;
     truth[border][0] = true;
     truth[border][1] = true;
@@ -263,6 +276,7 @@ Evac::Evac(int **grid, char **solution, int size)
       N[inland][j] = S[inland - 1][j];
       NE[inland][j] = SW[inland - 1][j + 1];
       E[inland][j] = 500 + heightdif(grid[inland][j], grid[inland][j + 1]);
+      weights[inland][j] = 0;
       truth[border][j] = true;
       if(grid[inland][j] == 30)
       {
@@ -275,6 +289,7 @@ Evac::Evac(int **grid, char **solution, int size)
     W[inland][inland] = E[inland][inland - 1];
     NW[inland][inland] = SE[inland - 1][inland - 1];
     N[inland][inland] = S[inland - 1][inland];
+    weights[inland][inland] = 0;
     truth[inland][border] = true;
     truth[border][inland] = true;
     truth[border][border] = true;
@@ -289,6 +304,7 @@ Evac::Evac(int **grid, char **solution, int size)
     N[inland][1] = S[inland - 1][1];
     NE[inland][1] = SW[inland - 1][2];
     E[inland][1] =5 * (500 + heightdif(grid[inland][1], grid[inland][2]));
+    weights[inland][1] = 0;
     truth[inland][0] = true;
     truth[border][0] = true;
     truth[border][1] = true;
@@ -306,6 +322,7 @@ Evac::Evac(int **grid, char **solution, int size)
       N[inland][j] = S[inland - 1][j];
       NE[inland][j] = SW[inland - 1][j + 1];
       E[inland][j] = 5 * (500 + heightdif(grid[inland][j], grid[inland][j + 1]));
+      weights[inland][j] = 0;
       truth[border][j] = true;
       if(grid[inland][j] == 30)
       {
@@ -318,6 +335,7 @@ Evac::Evac(int **grid, char **solution, int size)
     W[inland][inland] = E[inland][inland - 1];
     NW[inland][inland] = SE[inland - 1][inland - 1];
     N[inland][inland] = S[inland - 1][inland];
+    weights[inland][inland] = 0;
     truth[inland][border] = true;
     truth[border][inland] = true;
     truth[border][border] = true;
@@ -338,49 +356,49 @@ Evac::Evac(int **grid, char **solution, int size)
     y = high[i]->y;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 2, N[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 64, N[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 4, NE[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 32, NE[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 16, E[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 8, E[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x++;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 128, SE[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 1, SE[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 64, S[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 2, S[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     y--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 32, SW[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 4, SW[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 8, W[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 16, W[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     x--;
     if(truth[x][y] == false)
     {
-      temp = new Plot(x, y, 1, NW[high[i]->x][high[i]->y]);
+      temp = new Plot(x, y, 128, NW[high[i]->x][high[i]->y]);
       heap.insert(temp);
     }
     delete high[i];
@@ -435,56 +453,58 @@ void Evac::dikstras(char **solution)
       dist = temp->weight;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 2, dist + N[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 64, dist + N[temp->x][temp->y]);
         heap.insert(temp2);
       }
       y++;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 4, dist + NE[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 32, dist + NE[temp->x][temp->y]);
         heap.insert(temp2);
       }
       x++;
       if(truth[x][y] == false)
       {
-      temp2 = new Plot(x, y, 16, dist + E[temp->x][temp->y]);
+      temp2 = new Plot(x, y, 8, dist + E[temp->x][temp->y]);
         heap.insert(temp2);
       }
       x++;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 128, dist + SE[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 1, dist + SE[temp->x][temp->y]);
         heap.insert(temp2);
       }
       y--;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 64, dist + S[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 2, dist + S[temp->x][temp->y]);
         heap.insert(temp2);
       }
       y--;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 32, dist + SW[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 4, dist + SW[temp->x][temp->y]);
         heap.insert(temp2);
       }
       x--;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 8, dist + W[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 16, dist + W[temp->x][temp->y]);
         heap.insert(temp2);
       }
       x--;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 1, dist + NW[temp->x][temp->y]);
+        temp2 = new Plot(x, y, 128, dist + NW[temp->x][temp->y]);
         heap.insert(temp2);
       }
       //Shove new values into heap
 
       solution[temp->x][temp->y] = temp->direction;
-    }
-
+    } else {
+      if(temp->weight == weights[temp->x][temp->y])
+      solution[temp->x][temp->y] += temp->direction;
+    }//Else
 
  
   }

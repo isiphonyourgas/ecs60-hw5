@@ -54,6 +54,7 @@ class Evac {
     unsigned int *SW[1000];
     unsigned int *W[1000];
     unsigned int *NW[1000];
+    int *weights[1000];
     bool *truth[1000];
     BinaryHeap <Plot*> heap;//(8000000);
 
