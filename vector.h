@@ -1,3 +1,4 @@
+#define NO_CHECK
 #ifndef _VECTOR_H
 #define _VECTOR_H
 

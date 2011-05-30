@@ -1,4 +1,5 @@
         #include "BinaryHeap.h"
+        
 
         /**
          * Construct the binary heap.
@@ -18,8 +19,8 @@
         template <class Comparable>
         void BinaryHeap<Comparable>::insert( const Comparable & x )
         {
-            if( isFull( ) )
-                throw Overflow( );
+            //if( isFull( ) )
+                //throw Overflow( );
 
                 // Percolate up
             int hole = ++currentSize;
@@ -35,8 +36,8 @@
         template <class Comparable>
         const Comparable & BinaryHeap<Comparable>::findMin( ) const
         {
-            if( isEmpty( ) )
-                throw Underflow( );
+           // if( isEmpty( ) )
+               // throw Underflow( );
             return array[ 1 ];
         }
 
@@ -47,8 +48,8 @@
         template <class Comparable>
         void BinaryHeap<Comparable>::deleteMin( )
         {
-            if( isEmpty( ) )
-                throw Underflow( );
+//            if( isEmpty( ) )
+//                throw Underflow( );
 
             array[ 1 ] = array[ currentSize-- ];
             percolateDown( 1 );
@@ -61,8 +62,8 @@
         template <class Comparable>
         void BinaryHeap<Comparable>::deleteMin( Comparable & minItem )
         {
-            if( isEmpty( ) )
-                throw Underflow( );
+//            if( isEmpty( ) )
+//                throw Underflow( );
 
             minItem = array[ 1 ];
             array[ 1 ] = array[ currentSize-- ];
