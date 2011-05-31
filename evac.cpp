@@ -14,7 +14,48 @@ inline int heightdif(int value1, int value2)
   return value;
 }
 
-inline int nodedist1(int **grid, int low, int high, int index, int dist)
+inline int nodedist(int **grid, int x, int y, int dir, int dist)
+{
+  int i;
+  int value;
+  int value2 = dist;
+  if(dir < 0)
+  {
+    if(dir == -3)//N
+    {
+      for(i = 0; i < 5; i++)
+      {
+        value = (500 + heightdif(grid[x + i][y], grid[x + i + 1][y]))/5;
+        value2 += value;
+      }
+    } else {//E
+      for(i = 0; i < 5; i++)
+      {
+        value = (500 + heightdif(grid[x][y - i], grid[x][y - i - 1]))/5;
+        value2 += value;
+      }
+    }
+  } else {
+    if(dir == 1)//S
+    {
+      for(i = 0; i < 5; i++)
+      {
+        value = (500 + heightdif(grid[x - i][y], grid[x - i - 1][y]))/5;
+        value2 += value;
+      }
+    } else {//W
+      for(i = 0; i < 5; i++)
+      {
+        value = (500 + heightdif(grid[x][y + 1], grid[x][y + i + 1]))/5;
+        value2 += value;
+      }
+    }
+  }
+
+  return value2;
+}
+
+/*inline int nodedist1(int **grid, int low, int high, int index, int dist)
 {
   int i;
   int value;
@@ -45,7 +86,7 @@ inline int nodedist2(int **grid, int low, int high, int index, int dist)
   value2 += dist;
   return value2;
 }
-
+*/
 
 inline int edgeweight(int i, int j, int **grid, int dir)
 {
@@ -164,24 +205,11 @@ Evac::Evac(int **grid, char **solution, int Size)
     truth[i][0] = true;
     truth[i][border] = true;
   }
-
+  heap.makeEmpty();
   this->dijkstras2(grid, solution);
 
-  for(i = 0; i < size; i++)
-  {
-    for( j = 0; j < size; j++)
-    {
-      cout << (unsigned int)solution[i][j] << "   ";
-    }
-    cout << endl;
-  }
 
 
-cout << endl << endl << count << endl << endl;
-for(i = 0; i < count; i++)
-{
-  cout << i << "    " << high[i]->x << "    " << high[i]->y << endl;
-}
 //  this->dijkstras(solution);
 }//Constructor
 
@@ -193,10 +221,6 @@ void Evac::dijkstras1(int i, int j, char **solution, int **grid)
   BinaryHeap <Plot*>tempHeap(1000);
   tempHeap.makeEmpty(); 
   Plot *temp;
-if((i == 0) && (j == 5))
-{
-  cout << "here";
-}
   //set the truth values
   for(a = 0; a < 7; a++)
   {
@@ -277,7 +301,6 @@ if((i == 0) && (j == 5))
     x = high[a]->x;
     y = high[a]->y;
     temptrue[x2][y2] = true;
-cout << x << "  " << y << endl;
     weights[x][y] = -1;
     solution[x][y] = 0;
     x2--;
@@ -395,10 +418,6 @@ cout << x << "  " << y << endl;
     {
       rx = temp->x + i - 1;
       ry = temp->y + j - 1;
-if((rx == 10) && (ry == 10))
-  cout << "here";
-if((i > 0) && (j > 0))
-  cout << "a";
       temptrue[x][y] = true;
       dist = temp->weight;
       if((x == 1) && (y == 1))
@@ -552,7 +571,7 @@ if((i > 0) && (j > 0))
           }
         }
       }//Else
-  //    temptrue[x][y] = true;
+      delete temp;
     }
   }
   tempHeap.makeEmpty();
@@ -606,8 +625,6 @@ void Evac::dijkstras2(int **grid, char **solution)
   while(!heap.isEmpty())
   {
     heap.deleteMin(temp);
-if(temp->x == 95 && temp->y == 95)
-  cout << "asdsa";
     if(truth[temp->x][temp->y] == false)
     {
       x = temp->x;
@@ -617,7 +634,7 @@ if(temp->x == 95 && temp->y == 95)
       x -= 5;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 64, nodedist1(grid, x, x + 5, y, dist));
+        temp2 = new Plot(x, y, 64, nodedist(grid, x, y, -3, dist));
         heap.insert(temp2);
       }
       x += 10;
@@ -625,7 +642,7 @@ if(temp->x == 95 && temp->y == 95)
       {
         if(truth[x][y] == false)
         {
-          temp2 = new Plot(x, y, 2, nodedist1(grid, x - 5, x, y, dist));
+          temp2 = new Plot(x, y, 2, nodedist(grid, x, y, 1, dist));
           heap.insert(temp2);        
         }
       }
@@ -633,7 +650,7 @@ if(temp->x == 95 && temp->y == 95)
       y -= 5;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 16, nodedist2(grid, y, y + 5, x, dist));
+        temp2 = new Plot(x, y, 16, nodedist(grid, x, y, 3, dist));
         heap.insert(temp2);        
       }
       y += 10;
@@ -641,16 +658,18 @@ if(temp->x == 95 && temp->y == 95)
       {
         if(truth[x][y] == false)
         {
-          temp2 = new Plot(x, y, 8, nodedist1(grid, y - 5, y, x, dist));
+          temp2 = new Plot(x, y, 8, nodedist(grid, x, y, -1, dist));
           heap.insert(temp2);       
         }
       }      
       weights[temp->x][temp->y] = temp->weight;
       solution[temp->x][temp->y] = temp->direction;
       num++;
+      delete temp;
     } else {
-      if(temp->weight == weights[temp->x][temp->y])
+      if((temp->weight == weights[temp->x][temp->y]) && (solution[temp->x][temp->y] != temp->direction))
         solution[temp->x][temp->y] += temp->direction;
+      delete temp;
     }
   }
 
