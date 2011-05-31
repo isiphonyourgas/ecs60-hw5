@@ -10,12 +10,6 @@ using namespace std;
 class Plot {
   public:
     Plot(int i, int j, int dir, int w);
-   // ~Plot();
-    //  void buildEdge(int **grid, int i, int j, Plot ***edges);
-    //  void buildSideEdge(Plot ***edges, int size, int **grid);
-
-    //  Plot *N, *NE, *E, *SE, *S, *SW, *W, *NW;
-    //  int n, ne, e, se, s, sw, w, nw;
 
     int x, y;
     int direction, weight;
@@ -46,6 +40,13 @@ class Evac {
     void dijkstras1(int i, int j, char **solution, int **grid);
     void search(int i, int j, char **solution, int **grid);
     void dijkstras2(int **grid, char **solution);
+    void debug(int **grid);
+    void setTruth();
+    void resetTruth();
+    void init();
+    void truthCheck(int **grid, int i, int j);
+    void loadHigh(char **solution, int **grid);
+    int cornerCheck();
 
     Plot ***edges;
     int size;
@@ -62,6 +63,10 @@ class Evac {
     int count;
     Point *high[36];
     BinaryHeap <Plot*> heap;//(8000000);
+    BinaryHeap <Plot*> tempHeap;
+    bool temptrue[8][8];
+    Plot *plots[100];
+    int plotC;
 
 };
 

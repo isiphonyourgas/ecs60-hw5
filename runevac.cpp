@@ -80,6 +80,7 @@ int main(int argc, char** argv)
   double time = ct.cur_CPUTime();
   checkSolution(theirSolution, solutions, size);
   cout << "CPU Time: " << time << endl;
+  evac->debug(grid);
   delete evac;
   return 0;
 } // main()
