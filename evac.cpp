@@ -14,28 +14,36 @@ inline int heightdif(int value1, int value2)
   return value;
 }
 
-inline int nodedist1(int **grid, int low, int high, int index)
+inline int nodedist1(int **grid, int low, int high, int index, int dist)
 {
   int i;
-  int value = 0;
+  int value;
+  int value2 = 0;
   for(i = low + 1; i <= high; i++)
   {
+    value = 0;
     value += 500 + heightdif(grid[i - 1][index], grid[i][index]);
     value /= 5;
+    value2 += value;
   }
-  return value;
+  value2+= dist;
+  return value2;
 }
 
-inline int nodedist2(int **grid, int low, int high, int index)
+inline int nodedist2(int **grid, int low, int high, int index, int dist)
 {
   int i;
-  int value = 0;
+  int value;
+  int value2;
   for(i = low + 1; i <= high; i++)
   {
+    value = 0;
     value += 500 + heightdif(grid[index][i - 1], grid[index][i]);
     value /= 5;
+    value2 += value;
   }
-  return value;
+  value2 += dist;
+  return value2;
 }
 
 
@@ -120,13 +128,12 @@ Point::Point(int i, int j)
 
 Evac::Evac(int **grid, char **solution, int Size) 
 {
-  int i, j, inland, count, border;
+  int i, j, inland, border;
   size = Size;
   inland = size - 2;
   border = size - 1;
   count = 0;
-//  Point *high[1000000];
-  count++;
+//  Point *high[1000000]
   for(i = 0; i <= size; i++)
   {
     weights[i] = new int[1001];
@@ -158,7 +165,7 @@ Evac::Evac(int **grid, char **solution, int Size)
     truth[i][border] = true;
   }
 
-//  this->dijkstras2(grid, solution);
+  this->dijkstras2(grid, solution);
 
   for(i = 0; i < size; i++)
   {
@@ -168,27 +175,34 @@ Evac::Evac(int **grid, char **solution, int Size)
     }
     cout << endl;
   }
- // this->dijkstras(solution);
+
+
+cout << endl << endl << count << endl << endl;
+for(i = 0; i < count; i++)
+{
+  cout << i << "    " << high[i]->x << "    " << high[i]->y << endl;
+}
+//  this->dijkstras(solution);
 }//Constructor
 
 void Evac::dijkstras1(int i, int j, char **solution, int **grid)
 {
   bool temptrue[8][8];
   int a, b;
-  int indexX = i / 5;
-  int indexY = j / 5;
   int corner = 0;
   BinaryHeap <Plot*>tempHeap(1000);
   tempHeap.makeEmpty(); 
   Plot *temp;
-if(i == 0 && j == 0)
+if((i == 0) && (j == 5))
+{
   cout << "here";
+}
   //set the truth values
   for(a = 0; a < 7; a++)
   {
     temptrue[a][0] = true;
     temptrue[a][7] = true;
-    for(b = 1; b < 6; b++)
+    for(b = 1; b < 7; b++)
     {
       temptrue[a][b] = false;
     }
@@ -263,42 +277,9 @@ if(i == 0 && j == 0)
     x = high[a]->x;
     y = high[a]->y;
     temptrue[x2][y2] = true;
+cout << x << "  " << y << endl;
     weights[x][y] = -1;
- /*   if((x % 5 == 0) && (y % 5 == 0))
-    {
-      if(x == i)
-      {
-        if(y == j)
-        {
-          truth[i][j] = true;
-          solution[i][j] = 0;
-          weights[i][j] = 0;
-          temptrue[1][1] = 0;
-          corner++;
-        } else {
-          truth[i + 5][j] = true;
-          solution[i + 5][j] = 0;
-          weights[i + 5][j] = 0;
-          temptrue[6][1] = 0;
-          corner++;
-        }
-      } else {
-        if(y == j)
-        {
-          truth[i][j + 5] = true;
-          solution[i][j + 5] = 0;
-          weights[i][j + 5] = 0;
-          temptrue[1][6] = 0;
-          corner++;
-        } else {
-          truth[i + 5][j+5] = true;
-          solution[i + 5][j + 5] = 0;
-          weights[i + 5][j + 5] = 0;
-          temptrue[6][6] = 0;
-          corner++;
-        }
-      }
-    }*/
+    solution[x][y] = 0;
     x2--;
     x--;
     if(temptrue[x2][y2] == false)
@@ -414,6 +395,10 @@ if(i == 0 && j == 0)
     {
       rx = temp->x + i - 1;
       ry = temp->y + j - 1;
+if((rx == 10) && (ry == 10))
+  cout << "here";
+if((i > 0) && (j > 0))
+  cout << "a";
       temptrue[x][y] = true;
       dist = temp->weight;
       if((x == 1) && (y == 1))
@@ -586,8 +571,6 @@ void Evac::search(int i, int j, char **solution, int **grid)
     {
       if(grid[a][b] == 30)
       {
- if(a == 15 && b == 55)
-  cout << "a";
         high[count] = new Point(a,b);
         count++;
       }
@@ -600,9 +583,9 @@ void Evac::search(int i, int j, char **solution, int **grid)
 void Evac::dijkstras2(int **grid, char **solution)
 {
   int i, j;
-  int x, y, direction, dist;
+  int x, y, dist;
   int sentinal;
-  int num;
+  int num = 0;
   Plot *temp, *temp2;
   for(i = 5; i < size; i += 5)
   {
@@ -619,9 +602,12 @@ void Evac::dijkstras2(int **grid, char **solution)
   //Heap done
 
   sentinal = (size/5 - 1)*(size/5 - 1);
-  while(num < sentinal)
+//  while(num < sentinal)
+  while(!heap.isEmpty())
   {
     heap.deleteMin(temp);
+if(temp->x == 95 && temp->y == 95)
+  cout << "asdsa";
     if(truth[temp->x][temp->y] == false)
     {
       x = temp->x;
@@ -631,7 +617,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       x -= 5;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 64, dist + nodedist1(grid, x, x + 5, y));
+        temp2 = new Plot(x, y, 64, nodedist1(grid, x, x + 5, y, dist));
         heap.insert(temp2);
       }
       x += 10;
@@ -639,7 +625,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       {
         if(truth[x][y] == false)
         {
-          temp2 = new Plot(x, y, 2, dist + nodedist1(grid, x - 5, x, y));
+          temp2 = new Plot(x, y, 2, nodedist1(grid, x - 5, x, y, dist));
           heap.insert(temp2);        
         }
       }
@@ -647,7 +633,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       y -= 5;
       if(truth[x][y] == false)
       {
-        temp2 = new Plot(x, y, 16, dist + nodedist2(grid, y, y + 5, x));
+        temp2 = new Plot(x, y, 16, nodedist2(grid, y, y + 5, x, dist));
         heap.insert(temp2);        
       }
       y += 10;
@@ -655,7 +641,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       {
         if(truth[x][y] == false)
         {
-          temp2 = new Plot(x, y, 8, dist + nodedist1(grid, y - 5, y, x));
+          temp2 = new Plot(x, y, 8, nodedist1(grid, y - 5, y, x, dist));
           heap.insert(temp2);       
         }
       }      
