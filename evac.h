@@ -45,6 +45,7 @@ class Evac {
     Evac(int **grid, char **solution, int Size);
     void dijkstras1(int i, int j, char **solution, int **grid);
     void search(int i, int j, char **solution, int **grid);
+    void dijkstras2(int **grid, char **solution);
 
     Plot ***edges;
     int size;
@@ -56,8 +57,8 @@ class Evac {
     unsigned int *SW[1000];
     unsigned int *W[1000];
     unsigned int *NW[1000];
-    int *weights[1000];
-    bool *truth[1000];
+    int *weights[1001];
+    bool *truth[1001];
     int count;
     Point *high[36];
     BinaryHeap <Plot*> heap;//(8000000);
