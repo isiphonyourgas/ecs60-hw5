@@ -165,7 +165,7 @@ Evac::Evac(int **grid, char **solution, int Size)
   heap.makeEmpty();
   this->dijkstras2(grid, solution);
 
-
+  cout << "d";
 
 //  this->dijkstras(solution);
 }//Constructor
@@ -268,95 +268,17 @@ void Evac::dijkstras1(int i, int j, char **solution, int **grid)
       }
       x++;
       y++;
-      if(x == 1)
-      {
-        if(y == 1)
-        {
-          if(truth[i][j] == false)
-          {
-            solution[i][j] = temp->direction;
-            weights[i][j] = temp->weight;
-            truth[i][j] = true;
-          } else {
-            if(temp->weight < weights[i][j])
-            {
-              solution[i][j] = temp->direction;
-              weights[i][j] = temp->weight;
-            }
-          }
-          if(temptrue[x][y] == false)
-            corner++;
-          //Upper left C
-        } else {
-          if(y == 6)
-          {
-            y2 = j + 5;
-            if(truth[i][y2] == false)
-            {
-              solution[i][y2] = temp->direction;
-              weights[i][y2] = temp->weight;
-              truth[i][y2] = true;
-            } else {
-              if(temp->weight < weights[i][y2])
-              {
-                solution[i][y2] = temp->direction;
-                weights[i][y2] = temp->weight;
-              }
-            //upper right C
-            }
-            if(temptrue[x][y] == false)
-              corner++;
-          }
-        }
-      } else {
-        if(x == 6)
-        {
-          if(y == 1)
-          {
-            x2 = i + 5;
-            if(truth[x2][j] == false)
-            {
-              solution[x2][j] = temp->direction;
-              weights[x2][j] = temp->weight;
-              truth[x2][j] = true;
-            } else {
-            if(temp->weight < weights[x2][j])
-            {
-              solution[x2][j] = temp->direction;
-              weights[x2][j] = temp->weight;
-            }
-          //Lower left
-            }
-            if(temptrue[x][y] == false)
-              corner++;
-          } else {
-            if(y == 6)
-            {
-              x2 = i + 5;
-              y2 = j + 5;
-              if(truth[x2][y2] == false)
-              {
-                solution[x2][y2] = temp->direction;
-                weights[x2][y2] = temp->weight;
-                truth[x2][y2] = true;
-              } else {
-                if(temp->weight < weights[x2][y2])
-                {
-                  solution[x2][y2] = temp->direction;
-                  weights[x2][y2] = temp->weight;
-                }
-            //lower right
-              }
-              if(temptrue[x][y] == false)
-                corner++;
-            }
-          }
-        }
-      }//Else*/
       delete temp;
       
+    } else {
+      if(temp->weight == weights[temp->x][temp->y])
+      {
+        solution[temp->x][temp->y] |= temp->direction;
+      }
+      delete temp;
     }
-  }
+    
+  }//While
   tempHeap.makeEmpty();
 }//Diksttras
 
