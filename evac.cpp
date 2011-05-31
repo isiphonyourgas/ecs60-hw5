@@ -34,7 +34,7 @@ inline int nodedist2(int **grid, int low, int high, int index, int dist)
 {
   int i;
   int value;
-  int value2;
+  int value2 = 0;
   for(i = low + 1; i <= high; i++)
   {
     value = 0;
