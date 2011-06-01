@@ -156,8 +156,6 @@ Evac::Evac(int **grid, char **solution, int Size)
     } else {
       for(j = 0; j < size; j += 5)
       {
-if((i == 20) && (j == 45))
-  cout << " ";
         this->search(i,j, solution, grid);
       }
     }
@@ -167,7 +165,6 @@ if((i == 20) && (j == 45))
   heap.makeEmpty();
   this->dijkstras2(grid, solution);
 
-  cout << "d";
 
 //  this->dijkstras(solution);
 }//Constructor
@@ -175,7 +172,7 @@ if((i == 20) && (j == 45))
 void Evac::dijkstras1(int i, int j, char **solution, int **grid)
 {
   int corner;
-  int x, y, x2, y2;
+  int x, y;
  // BinaryHeap <Plot*>tempHeap(1000);
   tempHeap.makeEmpty(); 
   Plot *temp;
@@ -190,11 +187,15 @@ void Evac::dijkstras1(int i, int j, char **solution, int **grid)
   Plot *temp2;
   int dist, rx, ry;
 //  while(corner < 4)
+if((i == 75) && (j == 70))
+  cout << " ";
   while(!tempHeap.isEmpty())
   {
     tempHeap.deleteMin(temp);
     x = temp->x;
     y = temp->y;
+if((x == 76) && (y == 71))
+  cout << " ";
 //    if(temptrue[x][y] == false)
     if(weights[i + x - 1][j + y - 1] > temp->weight)
     {
@@ -273,9 +274,9 @@ void Evac::dijkstras1(int i, int j, char **solution, int **grid)
       delete temp;
       
     } else {
-      if(temp->weight == weights[temp->x][temp->y])
+      if(temp->weight == weights[i + temp->x - 1][j + temp->y - 1])
       {
-        solution[temp->x][temp->y] |= temp->direction;
+        solution[i + temp->x - 1][j + temp->y - 1] |= temp->direction;
       }
       delete temp;
     }
@@ -296,8 +297,6 @@ void Evac::search(int i, int j, char **solution, int **grid)
     {
       if(grid[a][b] == 30)
       {
-if((a == 20) && (b == 45))
-  cout << " ";
         high[count] = new Point(a,b);
         count++;
       }
@@ -334,8 +333,6 @@ void Evac::dijkstras2(int **grid, char **solution)
   while(!heap.isEmpty())
   {
     heap.deleteMin(temp);
-if((temp->x == 20) && (temp->y == 45))
-  cout <<" " ;
     if(weights[temp->x][temp->y] > temp->weight)
     {
       x = temp->x;
@@ -345,8 +342,6 @@ if((temp->x == 20) && (temp->y == 45))
       x -= 5;
       if(truth[x][y] == false)
       {
-if((x==10)&&(y==30))
-  cout<<"as";
         temp2 = new Plot(x, y, 64, nodedist(grid, x, y, -3, dist));
         heap.insert(temp2);
       }
@@ -363,9 +358,6 @@ if((x==10)&&(y==30))
       y -= 5;
       if(truth[x][y] == false)
       {
-if((x == 20) && (y == 45))
-  cout <<" ";
-
         temp2 = new Plot(x, y, 16, nodedist(grid, x, y, 3, dist));
         heap.insert(temp2);        
       }
@@ -374,8 +366,6 @@ if((x == 20) && (y == 45))
       {
         if(truth[x][y] == false)
         {
-if((x == 5)&&(y == 25))
-  cout <<" ";
           temp2 = new Plot(x, y, 8, nodedist(grid, x, y, -1, dist));
           heap.insert(temp2);       
         }
