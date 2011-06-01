@@ -46,7 +46,7 @@ inline int nodedist(int **grid, int x, int y, int dir, int dist)
     } else {//W
       for(i = 0; i < 5; i++)
       {
-        value = (500 + heightdif(grid[x][y + 1], grid[x][y + i + 1]))/5;
+        value = (500 + heightdif(grid[x][y + i], grid[x][y + i + 1]))/5;
         value2 += value;
       }
     }
@@ -156,6 +156,8 @@ Evac::Evac(int **grid, char **solution, int Size)
     } else {
       for(j = 0; j < size; j += 5)
       {
+if((i == 20) && (j == 45))
+  cout << " ";
         this->search(i,j, solution, grid);
       }
     }
@@ -294,6 +296,8 @@ void Evac::search(int i, int j, char **solution, int **grid)
     {
       if(grid[a][b] == 30)
       {
+if((a == 20) && (b == 45))
+  cout << " ";
         high[count] = new Point(a,b);
         count++;
       }
@@ -317,6 +321,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       if(weights[i][j] < 999999998)
       {
         temp = new Plot(i, j, (int)solution[i][j], weights[i][j]);
+        weights[i][j] = 999999999;
         heap.insert(temp);
         truth[i][j] = false;
       }
@@ -329,7 +334,9 @@ void Evac::dijkstras2(int **grid, char **solution)
   while(!heap.isEmpty())
   {
     heap.deleteMin(temp);
-    if(truth[temp->x][temp->y] == false)
+if((temp->x == 20) && (temp->y == 45))
+  cout <<" " ;
+    if(weights[temp->x][temp->y] > temp->weight)
     {
       x = temp->x;
       y = temp->y;
@@ -338,7 +345,7 @@ void Evac::dijkstras2(int **grid, char **solution)
       x -= 5;
       if(truth[x][y] == false)
       {
-if((x==5)&&(y==25))
+if((x==10)&&(y==30))
   cout<<"as";
         temp2 = new Plot(x, y, 64, nodedist(grid, x, y, -3, dist));
         heap.insert(temp2);
@@ -356,6 +363,8 @@ if((x==5)&&(y==25))
       y -= 5;
       if(truth[x][y] == false)
       {
+if((x == 20) && (y == 45))
+  cout <<" ";
 
         temp2 = new Plot(x, y, 16, nodedist(grid, x, y, 3, dist));
         heap.insert(temp2);        
@@ -376,8 +385,8 @@ if((x == 5)&&(y == 25))
       num++;
       delete temp;
     } else {
-      if((temp->weight == weights[temp->x][temp->y]) && (solution[temp->x][temp->y] != temp->direction))
-        solution[temp->x][temp->y] += temp->direction;
+      if((temp->weight == weights[temp->x][temp->y]))
+        solution[temp->x][temp->y] |= temp->direction;
       delete temp;
     }
   }
@@ -451,7 +460,7 @@ void Evac::truthCheck(int **grid, int i, int j)
   }
   if(i + 5 < size)
   {
-    if(grid[i + 5][j + 4] == -99)
+    if(grid[i + 5][j + 1] == -99)
     {
       temptrue[6][1] = true;
       temptrue[6][2] = true;
@@ -467,6 +476,12 @@ void Evac::truthCheck(int **grid, int i, int j)
       temptrue[6][4] = true;
       temptrue[6][5] = true;
       temptrue[6][6] = true;
+      temptrue[5][1] = true;
+      temptrue[5][2] = true;
+      temptrue[5][3] = true;
+      temptrue[5][4] = true;
+      temptrue[5][5] = true;
+      temptrue[5][6] = true;
   }
   if(grid[i + 1][j] == -99)
   {
@@ -479,7 +494,7 @@ void Evac::truthCheck(int **grid, int i, int j)
   }
   if( j + 5 < size)
   {
-    if(grid[i + 4][j + 5] == -99)
+    if(grid[i + 1][j + 5] == -99)
     {
       temptrue[1][1] = true;
       temptrue[2][1] = true;
@@ -489,12 +504,18 @@ void Evac::truthCheck(int **grid, int i, int j)
       temptrue[6][1] = true;
     }
   } else {
-      temptrue[1][1] = true;
-      temptrue[2][1] = true;
-      temptrue[3][1] = true;
-      temptrue[4][1] = true;
-      temptrue[5][1] = true;
-      temptrue[6][1] = true;
+      temptrue[1][5] = true;
+      temptrue[2][5] = true;
+      temptrue[3][5] = true;
+      temptrue[4][5] = true;
+      temptrue[5][5] = true;
+      temptrue[6][5] = true;
+      temptrue[1][6] = true;
+      temptrue[2][6] = true;
+      temptrue[3][6] = true;
+      temptrue[4][6] = true;
+      temptrue[5][6] = true;
+      temptrue[6][6] = true;
   }
 }
 
